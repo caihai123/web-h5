@@ -18,6 +18,9 @@
         <div @click="open" class="but">
             打开摄像头
         </div>
+        <video id="video" controls="controls">
+            您的浏览器不支持 video 标签。
+            </video>
     </div>
     <script>
      new Vue({
@@ -29,9 +32,13 @@
          },
          methods:{
              open(){
-                var caihai = navigator.mediaDevices.getUserMedia({video: { facingMode: "user" } });
-                caihai.then(function(value){
-                    console.log(value)
+                var promise = navigator.mediaDevices.getUserMedia({video: { facingMode: "user" } });
+                promise.then(function(value){
+                    var video = document.querySelector('video');
+                    video.srcObject = mediaStream;
+                    video.onloadedmetadata = function(e) {
+                        video.play();
+                    };
                 })
              }
          }
