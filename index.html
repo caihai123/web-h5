@@ -9,28 +9,38 @@
     <style>
     .but{
         display: inline-block;
+        padding: 10px;
         background-color: blue;
+        color: #fff;
     }
+    #video{width: 300px;height: 300px;margin: 0 auto;}
     </style>
 </head>
 <body>
-    <div id="app">
-        <div @click="open" class="but">打开摄像头</div>
-        <div @click="Taking" class="but">点击拍照</div>
-        <video id="video" controls="controls">您的浏览器不支持 video 标签。</video>
-        <canvas id="canvas" width="480" height="320"></canvas>
-        <div style="word-wrap: break-word">{{text}}</div>
+    <div id="app" style="text-align: center;">
+        <div style="margin: 20px 0;">
+            <div @click="open" class="but">打开摄像头</div>
+            <div @click="Taking" class="but">点击拍照</div>
+        </div>
+        <div>
+            <video v-show="video" id="video" controls="controls">您的浏览器不支持 video 标签。</video>
+            <canvas v-show="canvas" id="canvas" width="300" height="300"></canvas>
+        </div>
     </div>
     <script>
      new Vue({
          el:'#app',
          data:function(){
              return {
-                 text:'蔡海'
+                 text:'蔡海',
+                 video:false,
+                 canvas:true,
              }
          },
          methods:{
              open(){
+                 this.canvas = false;
+                 this.video = true;
                 var promise = navigator.mediaDevices.getUserMedia({video: { facingMode: "user" } });
                 promise.then(function(mediaStream){
                     var video = document.querySelector('video');
@@ -41,9 +51,11 @@
                 }).catch(function(err) { console.log(err.name + ": " + err.message); }); // 总是在最后检查错误
              },
              Taking(){
+                this.canvas = true;
                 var canvas = document.getElementById("canvas");
                 var context = canvas.getContext("2d");
-                context.drawImage(video,0,0,480,320);
+                context.drawImage(video,0,0,300,300);
+                this.video = false;
                 this.text = canvas.toDataURL("image/png", 0.1);
                 console.log(this.text)
              }
