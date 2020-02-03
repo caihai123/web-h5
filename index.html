@@ -33,7 +33,7 @@
          methods:{
              open(){
                 var promise = navigator.mediaDevices.getUserMedia({video: { facingMode: "user" } });
-                promise.then(function(value){
+                promise.then(function(mediaStream){
                     var video = document.querySelector('video');
                     video.srcObject = mediaStream;
                     video.onloadedmetadata = function(e) {
