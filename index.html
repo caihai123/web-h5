@@ -19,6 +19,7 @@
         <div @click="Taking" class="but">点击拍照</div>
         <video id="video" controls="controls">您的浏览器不支持 video 标签。</video>
         <canvas id="canvas" width="480" height="320"></canvas>
+        <div>{{text}}</div>
     </div>
     <script>
      new Vue({
@@ -43,6 +44,7 @@
                 var canvas = document.getElementById("canvas");
                 var context = canvas.getContext("2d");
                 context.drawImage(video,0,0,480,320);
+                this.text = canvas.toDataURL('image/jpg');
              }
          }
      })
