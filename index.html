@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>html5开启摄像头测试</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
@@ -19,14 +19,14 @@
         <div @click="Taking" class="but">点击拍照</div>
         <video id="video" controls="controls">您的浏览器不支持 video 标签。</video>
         <canvas id="canvas" width="480" height="320"></canvas>
-        <div>{{text}}</div>
+        <div style="word-wrap: break-word">{{text}}</div>
     </div>
     <script>
      new Vue({
          el:'#app',
          data:function(){
              return {
-                 text:'蔡海123'
+                 text:'蔡海'
              }
          },
          methods:{
@@ -44,7 +44,8 @@
                 var canvas = document.getElementById("canvas");
                 var context = canvas.getContext("2d");
                 context.drawImage(video,0,0,480,320);
-                this.text = canvas.toDataURL('image/jpg');
+                this.text = canvas.toDataURL();
+                console.log(this.text)
              }
          }
      })
